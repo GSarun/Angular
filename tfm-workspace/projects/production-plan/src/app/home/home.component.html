@@ -1,0 +1,33 @@
+<div class="container mx-auto mt-8">
+  <h2 class="text-2xl font-bold mb-4">Home</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">เลือกโรงงาน:</label>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <button *ngFor="let factory of factories" (click)="selectFactory(factory.id)"
+                [ngClass]="{'bg-indigo-500 text-white': selectedFactory === factory.id, 'bg-gray-200 text-gray-700': selectedFactory !== factory.id}"
+                class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          {{ factory.name }}
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">เลือกฝ่าย:</label>
+      <div class="mt-2 flex flex-wrap gap-2">
+        <button *ngFor="let department of departmentOptions" (click)="selectDepartment(department)"
+                [ngClass]="{'bg-indigo-500 text-white': selectedDepartment === department, 'bg-gray-200 text-gray-700': selectedDepartment !== department}"
+                class="px-4 py-2 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          {{ department }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Submit
+    </button>
+  </div>
+</div>
