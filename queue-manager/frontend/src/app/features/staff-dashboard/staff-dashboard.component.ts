@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { QueueService } from '../../core/services/queue.service';
 import { QueueItem } from '../../core/models/queue.model';
 import { Observable, take } from 'rxjs';
+import { SettingsDialogComponent } from '../settings/settings-dialog.component';
 
 @Component({
     selector: 'app-staff-dashboard',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, SettingsDialogComponent],
     templateUrl: './staff-dashboard.component.html',
 })
 export class StaffDashboardComponent implements OnInit {
@@ -15,13 +16,38 @@ export class StaffDashboardComponent implements OnInit {
     queues: { [lane: string]: Observable<QueueItem[]> } = {};
     activeItems: { [lane: string]: Observable<QueueItem | undefined> } = {};
 
+    speechRate: number = 1.0;
+    showSettings: boolean = false;
+
     constructor(private queueService: QueueService) { }
 
     ngOnInit() {
+        this.loadSettings();
         this.lanes.forEach(lane => {
             this.queues[lane] = this.queueService.getQueueByLane(lane);
             this.activeItems[lane] = this.queueService.getActiveItem(lane);
         });
+    }
+
+    loadSettings() {
+        const savedRate = localStorage.getItem('speechRate');
+        if (savedRate) {
+            this.speechRate = parseFloat(savedRate);
+        }
+    }
+
+    saveSettings(rate: number) {
+        this.speechRate = rate;
+        localStorage.setItem('speechRate', rate.toString());
+        this.showSettings = false;
+    }
+
+    openSettings() {
+        this.showSettings = true;
+    }
+
+    closeSettings() {
+        this.showSettings = false;
     }
 
     callNext(lane: string) {
@@ -44,6 +70,7 @@ export class StaffDashboardComponent implements OnInit {
         const spokenText = licensePlate.split('').join(' ');
         const utterance = new SpeechSynthesisUtterance(spokenText);
         utterance.lang = 'th-TH';
+        utterance.rate = this.speechRate;
         window.speechSynthesis.speak(utterance);
     }
 }
