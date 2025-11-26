@@ -1,0 +1,29 @@
+<div class="min-h-screen bg-gray-50 font-sans">
+  <nav class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-3">
+      <div class="flex justify-between items-center">
+        <div class="text-xl font-bold text-gray-800">
+          <a routerLink="/" class="hover:text-blue-600 transition">QMS</a>
+        </div>
+        <div class="hidden md:flex space-x-6">
+          <a routerLink="/registration" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">Registration</a>
+          <a routerLink="/staff" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">Staff Dashboard</a>
+          <a routerLink="/display" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">Public Display</a>
+          <a routerLink="/booking" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">Booking</a>
+          <a routerLink="/history" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">History</a>
+          <a routerLink="/analytics" routerLinkActive="text-blue-600 font-semibold"
+            class="text-gray-600 hover:text-blue-600 transition">Analytics</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-6 py-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>

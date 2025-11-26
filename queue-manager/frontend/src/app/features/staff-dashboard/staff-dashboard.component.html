@@ -1,0 +1,56 @@
+<div class="container mx-auto p-6">
+    <h2 class="text-3xl font-bold mb-8 text-gray-800">Staff Dashboard</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div *ngFor="let lane of lanes" class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+            <div class="bg-gray-50 p-4 border-b border-gray-100">
+                <h3 class="text-xl font-bold text-gray-700">Lane {{ lane }}</h3>
+            </div>
+
+            <div class="p-4">
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Current Active</h4>
+                    <div *ngIf="activeItems[lane] | async as active; else noActive"
+                        class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm">
+                        <p class="font-bold text-lg">{{ active.licensePlate }}</p>
+                        <p class="text-sm">{{ active.userDetails }}</p>
+                        <p class="text-xs mt-1 text-green-600">Started: {{ active.startedAt | date:'shortTime' }}</p>
+                    </div>
+                    <ng-template #noActive>
+                        <div class="bg-gray-100 text-gray-500 p-4 rounded text-center italic">
+                            No vehicle currently serving
+                        </div>
+                    </ng-template>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Waiting Queue</h4>
+                    <ul class="space-y-2">
+                        <li *ngFor="let item of queues[lane] | async"
+                            class="bg-white border border-gray-200 p-3 rounded shadow-sm flex justify-between items-center">
+                            <div>
+                                <span class="font-bold text-gray-800">{{ item.licensePlate }}</span>
+                                <span class="text-xs text-gray-500 block">{{ item.userDetails }}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">{{ item.joinedAt | date:'shortTime' }}</span>
+                        </li>
+                        <li *ngIf="(queues[lane] | async)?.length === 0" class="text-gray-400 text-center text-sm py-2">
+                            Queue is empty
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex space-x-2 mt-4">
+                    <button (click)="callNext(lane)"
+                        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200">
+                        Call Next
+                    </button>
+                    <button (click)="finishCurrent(lane)"
+                        class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200">
+                        Finish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

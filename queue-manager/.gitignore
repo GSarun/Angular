@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Compilation output
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Environments
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.swp
+*.swo
+
+# System
+.DS_Store
+Thumbs.db
+
+# Angular
+.angular/
+coverage/
+
+# Logs
+npm-debug.log
+yarn-error.log

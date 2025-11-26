@@ -1,0 +1,65 @@
+<div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-xl shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Advance Booking</h2>
+
+    <div *ngIf="successMessage"
+        class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <strong class="font-bold">Success!</strong>
+        <span class="block sm:inline">{{ successMessage }}</span>
+    </div>
+
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+        role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline">{{ errorMessage }}</span>
+    </div>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="date">Date</label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                    id="date" type="date" formControlName="date">
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="timeSlot">Time Slot</label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                    id="timeSlot" type="time" formControlName="timeSlot">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="lane">Lane</label>
+            <select
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 bg-white"
+                id="lane" formControlName="lane">
+                <option value="1">Lane 1</option>
+                <option value="2">Lane 2</option>
+                <option value="3">Lane 3</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="licensePlate">License Plate</label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                id="licensePlate" type="text" formControlName="licensePlate" placeholder="e.g. 1ABC-1234">
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="userDetails">User Details</label>
+            <input
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500"
+                id="userDetails" type="text" formControlName="userDetails" placeholder="Name / Phone">
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105"
+                type="submit">
+                Book Slot
+            </button>
+        </div>
+    </form>
+</div>

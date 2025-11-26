@@ -1,8 +1,0 @@
-npm install -g @angular/cli
-ng new tfm-workspace --no-create-application
-
-npm install -D tailwindcss postcss autoprefixer
-ติดตั้ง tailwindcss, postcss, และ autoprefixer ติดตั้ง Tailwind CSS v3
-สร้างไฟล์ tailwind.config.js และ postcss.config.js
-กำหนดค่าใน tailwind.config.js เพื่อให้ Tailwind รู้จักไฟล์ source code ของโปรเจกต์
-เพิ่ม Tailwind directives ลงในไฟล์ styles.css หลัก
