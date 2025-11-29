@@ -13,10 +13,12 @@ import { QueueItem } from '../../core/models/queue.model';
 export class RegistrationComponent {
     registrationForm: FormGroup;
     submitted = false;
+    successMessage: string | null = null;
 
     constructor(private fb: FormBuilder, private queueService: QueueService) {
         this.registrationForm = this.fb.group({
-            licensePlate: ['', Validators.required],
+            licensePlate: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9-]+$')]],
+            licensePlateProvince: ['', Validators.required],
             userDetails: ['', Validators.required],
             lane: ['1', Validators.required]
         });
@@ -24,19 +26,33 @@ export class RegistrationComponent {
 
     onSubmit() {
         this.submitted = true;
+        this.successMessage = null;
+
         if (this.registrationForm.valid) {
             const newItem: QueueItem = {
                 id: this.generateId(),
-                licensePlate: this.registrationForm.value.licensePlate,
+                licensePlate: this.registrationForm.value.licensePlate.toUpperCase(),
+                licensePlateProvince: this.registrationForm.value.licensePlateProvince,
                 userDetails: this.registrationForm.value.userDetails,
                 lane: this.registrationForm.value.lane,
                 status: 'waiting',
                 joinedAt: new Date()
             };
+
             this.queueService.addQueueItem(newItem);
-            this.registrationForm.reset({ lane: '1' });
+
+            // Show success feedback
+            this.successMessage = `Vehicle ${newItem.licensePlate} registered successfully!`;
+
+            // Reset form but keep the lane selection
+            const currentLane = this.registrationForm.get('lane')?.value;
+            this.registrationForm.reset({ lane: currentLane });
             this.submitted = false;
-            alert('Registration Successful!');
+
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                this.successMessage = null;
+            }, 3000);
         }
     }
 

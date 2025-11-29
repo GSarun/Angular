@@ -1,22 +1,43 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, map, interval, Subscription, switchMap, retry, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { QueueItem } from '../models/queue.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class QueueService {
+export class QueueService implements OnDestroy {
     private apiUrl = 'http://localhost:3000/api/queue';
     private queueSubject = new BehaviorSubject<QueueItem[]>([]);
     public queue$ = this.queueSubject.asObservable();
+    private pollingSubscription: Subscription;
 
     constructor(private http: HttpClient) {
         this.loadQueue();
+
+        // Poll every 5 seconds to keep data fresh
+        this.pollingSubscription = interval(5000).pipe(
+            switchMap(() => this.http.get<QueueItem[]>(this.apiUrl)),
+            retry(3)
+        ).subscribe({
+            next: (items) => {
+                // Only update if data has changed (simple check)
+                if (JSON.stringify(items) !== JSON.stringify(this.queueSubject.value)) {
+                    this.queueSubject.next(items);
+                }
+            },
+            error: (err) => console.error('Polling error', err)
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.pollingSubscription) {
+            this.pollingSubscription.unsubscribe();
+        }
     }
 
     private loadQueue() {
-        this.http.get<QueueItem[]>(this.apiUrl).subscribe({
+        this.http.get<QueueItem[]>(this.apiUrl).pipe(retry(3)).subscribe({
             next: (items) => this.queueSubject.next(items),
             error: (err) => console.error('Failed to load queue', err)
         });

@@ -1,6 +1,7 @@
 export interface QueueItem {
     id: string;
     licensePlate: string;
+    licensePlateProvince: string;
     userDetails: string;
     lane: string;
     status: 'waiting' | 'active' | 'completed' | 'cancelled';
@@ -16,6 +17,7 @@ export interface Booking {
     timeSlot: string; // HH:mm
     lane: string;
     licensePlate: string;
+    licensePlateProvince: string;
     userDetails: string;
 }
 

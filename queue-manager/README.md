@@ -19,7 +19,7 @@ A modern Queue Management Application built with Angular (Frontend) and Node.js/
 ## Prerequisites
 
 - Node.js (v18 or higher)
-- npm
+- bun
 - A Supabase account and project
 
 ## Setup Instructions
@@ -39,7 +39,7 @@ cd queue-manager
     ```
 2.  Install dependencies:
     ```bash
-    npm install
+    bun install
     ```
 3.  Configure Environment Variables:
     - Create a `.env` file in the `backend` directory.
@@ -61,7 +61,7 @@ cd queue-manager
     ```
 2.  Install dependencies:
     ```bash
-    npm install
+    bun install
     ```
 
 ## Running the Application
@@ -69,14 +69,14 @@ cd queue-manager
 ### Start Backend
 ```bash
 cd backend
-npm start
+bun start
 ```
 Server will run on `http://localhost:3000`.
 
 ### Start Frontend
 ```bash
 cd frontend
-npm start
+bun start
 ```
 Application will run on `http://localhost:4200`.
 

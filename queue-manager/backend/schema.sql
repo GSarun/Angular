@@ -3,6 +3,7 @@
 CREATE TABLE queue_items (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     "licensePlate" TEXT NOT NULL,
+    "licensePlateProvince" TEXT,
     "userDetails" TEXT,
     lane TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('waiting', 'active', 'completed', 'cancelled')),
@@ -10,6 +11,13 @@ CREATE TABLE queue_items (
     "startedAt" TIMESTAMPTZ,
     "completedAt" TIMESTAMPTZ,
     "estimatedWaitTime" INTEGER
+);
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    "createdAt" TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- Optional: Enable Row Level Security (RLS) if you want to restrict access

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(public authService: AuthService) { }
+
+  logout() {
+    this.authService.logout();
+  }
 }
